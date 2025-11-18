@@ -61,11 +61,9 @@ const LoginPage = () => {
 			let displayMessage;
 			if (error.status === 401) {
 				displayMessage =
-					error.message ||
 					"Identifiants invalides. Veuillez vérifier votre email et mot de passe.";
 			} else {
 				displayMessage =
-					error.message ||
 					"Une erreur est survenue lors de la connexion. Veuillez réessayer.";
 			}
 
