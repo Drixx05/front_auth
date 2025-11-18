@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import {
 	Form,
 	Button,
@@ -47,11 +47,13 @@ const Register = () => {
 			const data = await response.json();
 
 			if (!response.ok) {
-				throw new Error(data.message || "Échec de l'inscription");
+				const err = new Error(data.message || "Échec de l'inscription");
+				err.status = response.status;
+				throw err;
 			}
 
 			console.log("Inscription réussie:", data);
-			navigate("/login");
+			navigate("/connexion");
 		} catch (error) {
 			console.error("Erreur lors de l'inscription:", error);
 			setError(
