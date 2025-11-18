@@ -39,35 +39,30 @@ const LoginPage = () => {
 			const data = await response.json();
 
 			if (!response.ok) {
-				let errorMessage;
-
-				if (
-					response.status === 401 ||
-					response.status === 403 ||
-					response.status === 404
-				) {
-					errorMessage =
-						"Identifiants invalides. Veuillez vérifier votre email et mot de passe.";
-				} else {
-					errorMessage =
-						"Une erreur est survenue lors de la connexion. Veuillez réessayer.";
-				}
-
-				const err = new Error(data.message || errorMessage);
-				err.status = response.status;
-				throw err;
+				throw { status: response.status, message: data && data.message };
 			}
 
 			console.log("Connexion réussie:", data);
 			navigate("/offres/professionnelles");
 		} catch (error) {
+			const status = error && error.status ? error.status : null;
 			console.error(
 				`Erreur lors de la connexion ${error.status || ""}:`,
 				error
 			);
-			setError(
-				"Une erreur est survenue lors de la connexion. Veuillez vérifier vos informations et réessayer."
-			);
+
+			let displayMessage;
+			if (status === 401 || status === 403 || status === 404) {
+				displayMessage =
+					error.message ||
+					"Identifiants invalides. Veuillez vérifier votre email et mot de passe.";
+			} else {
+				displayMessage =
+					error.message ||
+					"Une erreur est survenue lors de la connexion. Veuillez réessayer.";
+			}
+
+			setError(displayMessage);
 		}
 	};
 
