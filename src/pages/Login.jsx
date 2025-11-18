@@ -1,5 +1,13 @@
 import { useState } from "react";
-import { Form, Button, Container, Card, Row, Col, Alert } from "react-bootstrap";
+import {
+	Form,
+	Button,
+	Container,
+	Card,
+	Row,
+	Col,
+	Alert,
+} from "react-bootstrap";
 import { useNavigate } from "react-router";
 
 const LoginPage = () => {
@@ -39,20 +47,19 @@ const LoginPage = () => {
 			const data = await response.json();
 
 			if (!response.ok) {
-				throw { status: response.status, message: data && data.message };
+				throw { status: response.status, message: data.message };
 			}
 
 			console.log("Connexion réussie:", data);
 			navigate("/offres/professionnelles");
 		} catch (error) {
-			const status = error && error.status ? error.status : null;
 			console.error(
 				`Erreur lors de la connexion ${error.status || ""}:`,
 				error
 			);
 
 			let displayMessage;
-			if (status === 401 || status === 403 || status === 404) {
+			if (error.status === 401) {
 				displayMessage =
 					error.message ||
 					"Identifiants invalides. Veuillez vérifier votre email et mot de passe.";
