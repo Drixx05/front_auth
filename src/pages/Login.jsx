@@ -8,8 +8,9 @@ import {
 	Col,
 	Alert,
 } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { loginSuccess } from "../store/authSlice";
 
 const LoginPage = () => {
 	const [formData, setFormData] = useState({
@@ -20,6 +21,9 @@ const LoginPage = () => {
 	const [error, setError] = useState(null);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const auth = useSelector((state) => state.auth);
+	const isValidToken = auth.token && new Date(auth.expiresAt) > new Date();
+
 
 	const handleChange = (e) => {
 		setFormData({
@@ -60,8 +64,9 @@ const LoginPage = () => {
 					).toISOString(),
 				})
 			);
-
-			navigate("/offres/professionnelles");
+			if (isValidToken) {
+				navigate("/offres/professionnelles");
+			}
 		} catch (error) {
 			console.error(
 				`Erreur lors de la connexion ${error.status || ""}:`,
