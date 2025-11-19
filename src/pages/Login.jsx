@@ -50,7 +50,6 @@ const LoginPage = () => {
 				throw { status: response.status, message: data.message };
 			}
 
-			console.log("Connexion réussie:", data);
 			navigate("/offres/professionnelles");
 		} catch (error) {
 			console.error(

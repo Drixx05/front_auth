@@ -52,7 +52,6 @@ const Register = () => {
 				throw err;
 			}
 
-			console.log("Inscription réussie:", data);
 			navigate("/connexion");
 		} catch (error) {
 			console.error(`Erreur lors de l'inscription ${ error.status }`);
