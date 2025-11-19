@@ -45,6 +45,15 @@ const LoginPage = () => {
 			);
 
 			const data = await response.json();
+			localStorage.setItem(
+				"auth",
+				JSON.stringify({
+					token: data.access_token,
+					expiresAt: new Date(
+						Date.now() + data.expires_in * 1000
+					).toISOString(),
+				})
+			);
 
 			if (!response.ok) {
 				throw { status: response.status, message: data.message };
