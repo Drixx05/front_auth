@@ -1,6 +1,8 @@
 import { Nav, Navbar, Container } from "react-bootstrap";
 import { NavLink, useLocation } from "react-router";
 import "../assets/styles/Header.css";
+import { useEffect, useState } from "react";
+
 function Header() {
 	const location = useLocation();
 
@@ -31,14 +33,14 @@ function Header() {
 						Offres Professionnelles
 					</Nav.Link>
 					{!isConnected && (
-						<Nav.Link as={NavLink} to="/inscription">
-							Inscription
-						</Nav.Link>
-					)}
-					{!isConnected && (
-						<Nav.Link as={NavLink} to="/connexion">
-							Connexion
-						</Nav.Link>
+						<>
+							<Nav.Link as={NavLink} to="/inscription">
+								Inscription
+							</Nav.Link>
+							<Nav.Link as={NavLink} to="/connexion">
+								Connexion
+							</Nav.Link>
+						</>
 					)}
 					{isConnected && (
 						<Nav.Link as={NavLink} to="/deconnexion">
