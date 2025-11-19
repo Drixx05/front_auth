@@ -21,8 +21,7 @@ const LoginPage = () => {
 	const [error, setError] = useState(null);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const auth = useSelector((state) => state.auth);
-	const isValidToken = auth.token && new Date(auth.expiresAt) > new Date();
+	useSelector((state) => state.auth);
 
 	const handleChange = (e) => {
 		setFormData({

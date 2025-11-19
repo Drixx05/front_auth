@@ -1,11 +1,9 @@
 import { Nav, Navbar, Container } from "react-bootstrap";
-import { NavLink, useLocation } from "react-router";
+import { NavLink } from "react-router";
 import "../assets/styles/Header.css";
-import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 function Header() {
-	const location = useLocation();
 	const auth = useSelector((state) => state.auth);
 
 	const getValidToken = () => {
