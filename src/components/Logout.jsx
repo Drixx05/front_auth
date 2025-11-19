@@ -5,18 +5,37 @@ const Logout = () => {
 	const navigate = useNavigate();
 	useEffect(() => {
 		const handleLogout = async () => {
-			await fetch("/logout", {
-				method: "POST",
-				headers: {
-					Authorization: `Bearer ${
-						JSON.parse(localStorage.getItem("auth"))?.token
-					}`,
-				},
-			});
+			try {
+				const auth = JSON.parse(localStorage.getItem("auth"));
+				const token = auth?.token;
 
-			localStorage.removeItem("auth");
+				if (token) {
+					const response = await fetch(
+						"https://offers-api.digistos.com/api/auth/logout",
+						{
+							method: "POST",
+							headers: {
+								Accept: "application/json",
+								Authorization: `Bearer ${token}`,
+							},
+						}
+					);
 
-			navigate("/connexion");
+					if (!response.ok) {
+						const datas = await response.json();
+						throw new Error(
+							`HTTP error: ${datas.message} (status: ${response.status})`
+						);
+					}
+				} else {
+					throw new Error("Missing Token");
+				}
+			} catch (error) {
+				console.error(error.message);
+			} finally {
+				localStorage.removeItem("auth");
+				navigate("/connexion");
+			}
 		};
 
 		handleLogout();
