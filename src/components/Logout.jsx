@@ -4,14 +4,13 @@ import { useNavigate } from "react-router";
 import { logout } from "../store/authSlice";
 
 const Logout = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const token = useSelector((state) => state.auth.token)
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const token = useSelector((state) => state.auth.token);
 
 	useEffect(() => {
 		const handleLogout = async () => {
 			try {
-
 				if (token) {
 					const response = await fetch(
 						"https://offers-api.digistos.com/api/auth/logout",
@@ -36,8 +35,8 @@ const Logout = () => {
 			} catch (error) {
 				console.error(error.message);
 			} finally {
-        dispatch(logout());
-        navigate("/connexion");
+				dispatch(logout());
+				navigate("/connexion");
 			}
 		};
 

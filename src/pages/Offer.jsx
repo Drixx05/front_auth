@@ -4,72 +4,71 @@ import { Container, Card, Spinner, Alert } from "react-bootstrap";
 import { useSelector } from "react-redux";
 
 const Offer = () => {
-  const { id } = useParams();
-  const [offer, setOffer] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const token = useSelector((state) => state.auth.token);
+	const { id } = useParams();
+	const [offer, setOffer] = useState(null);
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState(null);
+	const token = useSelector((state) => state.auth.token);
 
-  useEffect(() => {
-    const fetchOffer = async () => {
+	useEffect(() => {
+		const fetchOffer = async () => {
+			try {
+				const response = await fetch(
+					`https://offers-api.digistos.com/api/offers/${id}`,
+					{
+						headers: {
+							Accept: "application/json",
+							Authorization: `Bearer ${token}`,
+						},
+					}
+				);
 
-      try {
-        const response = await fetch(
-          `https://offers-api.digistos.com/api/offers/${id}`,
-          {
-            headers: {
-              Accept: "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+				const { data: offers, message } = await response.json();
 
-        const { data: offers, message } = await response.json();
-        
-        if (!response.ok) {
-          throw { status: response.status, message: message };
-        }
+				if (!response.ok) {
+					throw { status: response.status, message: message };
+				}
 
-        setOffer(offers);
-      } catch (err) {
-        if (err.status === 403) {
-          setError("Accès non autorisé (403).");
-        } else {
-          setError("Erreur lors du chargement de l'offre.");
-        }
-        console.error(err.message || err);
-      } finally {
-        setLoading(false);
-      }
-    };
+				setOffer(offers);
+			} catch (err) {
+				if (err.status === 403) {
+					setError("Accès non autorisé (403).");
+				} else {
+					setError("Erreur lors du chargement de l'offre.");
+				}
+				console.error(err.message || err);
+			} finally {
+				setLoading(false);
+			}
+		};
 
-    fetchOffer();
-  }, [id]);
+		fetchOffer();
+	}, [id]);
 
-  if (loading)
-    return <Spinner animation="border" className="d-block mx-auto mt-5" />;
-  if (error)
-    return (
-      <Alert variant="danger" className="mt-5 text-center">
-        {error}
-      </Alert>
-    );
+	if (loading)
+		return <Spinner animation="border" className="d-block mx-auto mt-5" />;
+	if (error)
+		return (
+			<Alert variant="danger" className="mt-5 text-center">
+				{error}
+			</Alert>
+		);
 
-  return (
-    <Container className="mt-5">
-      <Card>
-        <Card.Body>
-          <Card.Title>{offer.name}</Card.Title>
-          <Card.Text>
-            <strong>Prix :</strong> {offer.price}€
-          </Card.Text>
-          <Card.Text>
-            <strong>Description :</strong> {offer.details}
-          </Card.Text>
-        </Card.Body>
-      </Card>
-    </Container>
-  );
+	return (
+		<Container className="mt-5">
+			<Card>
+				<Card.Body>
+					<Card.Title>{offer.name}</Card.Title>
+					<Card.Text>
+						<strong>Prix :</strong> {offer.price}€
+					</Card.Text>
+					<Card.Text>
+						<strong>Description :</strong> {offer.details}
+					</Card.Text>
+				</Card.Body>
+			</Card>
+		</Container>
+	);
 };
 
 export default Offer;

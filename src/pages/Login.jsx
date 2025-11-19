@@ -24,7 +24,6 @@ const LoginPage = () => {
 	const auth = useSelector((state) => state.auth);
 	const isValidToken = auth.token && new Date(auth.expiresAt) > new Date();
 
-
 	const handleChange = (e) => {
 		setFormData({
 			...formData,
@@ -64,9 +63,8 @@ const LoginPage = () => {
 					).toISOString(),
 				})
 			);
-			if (isValidToken) {
-				navigate("/offres/professionnelles");
-			}
+
+			navigate("/offres/professionnelles");
 		} catch (error) {
 			console.error(
 				`Erreur lors de la connexion ${error.status || ""}:`,

@@ -13,11 +13,7 @@ function Header() {
 		return isValid;
 	};
 
-	const [isConnected, setIsConnected] = useState(null);
-
-	useEffect(() => {
-		setIsConnected(getValidToken());
-	}, [location]);
+	const isConnected = getValidToken();
 
 	return (
 		<Navbar bg="light" data-bs-theme="light">
