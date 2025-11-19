@@ -8,7 +8,7 @@ import {
 	Col,
 	Alert,
 } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { loginSuccess } from "../store/authSlice";
 
@@ -21,7 +21,6 @@ const LoginPage = () => {
 	const [error, setError] = useState(null);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	useSelector((state) => state.auth);
 
 	const handleChange = (e) => {
 		setFormData({
