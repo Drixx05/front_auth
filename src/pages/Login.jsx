@@ -8,6 +8,7 @@ import {
 	Col,
 	Alert,
 } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 
 const LoginPage = () => {
@@ -18,6 +19,7 @@ const LoginPage = () => {
 
 	const [error, setError] = useState(null);
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	const handleChange = (e) => {
 		setFormData({
@@ -49,6 +51,15 @@ const LoginPage = () => {
 			if (!response.ok) {
 				throw { status: response.status, message: data.message };
 			}
+
+			dispatch(
+				loginSuccess({
+					token: data.access_token,
+					expiresAt: new Date(
+						Date.now() + data.expires_in * 1000
+					).toISOString(),
+				})
+			);
 
 			navigate("/offres/professionnelles");
 		} catch (error) {
