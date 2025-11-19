@@ -45,7 +45,15 @@ const Register = () => {
 			);
 
 			const data = await response.json();
-
+			localStorage.setItem(
+				"auth",
+				JSON.stringify({
+					token: data.access_token,
+					expiresAt: new Date(
+						Date.now() + data.expires_in * 1000 * 1000
+					).toISOString(),
+				})
+			);
 			if (!response.ok) {
 				const err = new Error(data.message || "Échec de l'inscription");
 				err.status = response.status;
@@ -55,7 +63,7 @@ const Register = () => {
 			console.log("Inscription réussie:", data);
 			navigate("/connexion");
 		} catch (error) {
-			console.error(`Erreur lors de l'inscription ${ error.status }`);
+			console.error(`Erreur lors de l'inscription ${error.status}`);
 			setError(
 				"Une erreur est survenue lors de l'inscription. Veuillez vérifier vos informations et réessayer."
 			);

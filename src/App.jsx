@@ -10,20 +10,22 @@ import Offer from "./pages/Offer.jsx";
 import Logout from "./components/Logout.jsx";
 
 function App() {
-  return (
-    <Routes>
-      <Route element={<Layout />}>
-        <Route path="/" element={<Home />} />
-        <Route path="/inscription" element={<Register />} />
-        <Route path="/connexion" element={<Login />} />
-        <Route path="/deconnexion" element={<Logout />} />
-        <Route path="/offres/professionnelles" element={<OfferProList />} />
-        <Route path="/offres/publiques" element={<OfferPublicList />} />
-        <Route path="/offre/:id" element={<Offer />} />
-        <Route path="*" element={<NotFound />} />
-      </Route>
-    </Routes>
-  );
+	return (
+		<Routes>
+			<Route element={<Layout />}>
+				<Route path="/" element={<Home />} />
+				<Route path="/inscription" element={<Register />} />
+				<Route path="/connexion" element={<Login />} />
+				<Route path="/offres/publiques" element={<OfferPublicList />} />
+				<Route path="*" element={<NotFound />} />
+				<Route path="/offre/:id" element={<Offer />} />
+				<Route element={<PrivateRoute />}>
+					<Route path="/offres/professionnelles" element={<OfferProList />} />
+					<Route path="/deconnexion" element={<Logout />} />
+				</Route>
+			</Route>
+		</Routes>
+	);
 }
 
 export default App;
