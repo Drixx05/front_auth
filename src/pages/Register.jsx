@@ -45,14 +45,13 @@ const Register = () => {
 			);
 
 			const data = await response.json();
-			
+
 			if (!response.ok) {
 				const err = new Error(data.message || "Échec de l'inscription");
 				err.status = response.status;
 				throw err;
 			}
 
-			console.log("Inscription réussie:", data);
 			navigate("/connexion");
 		} catch (error) {
 			console.error(`Erreur lors de l'inscription ${error.status}`);

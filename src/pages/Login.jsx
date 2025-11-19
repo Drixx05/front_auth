@@ -45,6 +45,11 @@ const LoginPage = () => {
 			);
 
 			const data = await response.json();
+
+			if (!response.ok) {
+				throw { status: response.status, message: data.message };
+			}
+
 			localStorage.setItem(
 				"auth",
 				JSON.stringify({
@@ -55,11 +60,6 @@ const LoginPage = () => {
 				})
 			);
 
-			if (!response.ok) {
-				throw { status: response.status, message: data.message };
-			}
-
-			console.log("Connexion réussie:", data);
 			navigate("/offres/professionnelles");
 		} catch (error) {
 			console.error(
