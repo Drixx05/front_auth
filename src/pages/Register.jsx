@@ -45,15 +45,7 @@ const Register = () => {
 			);
 
 			const data = await response.json();
-			localStorage.setItem(
-				"auth",
-				JSON.stringify({
-					token: data.access_token,
-					expiresAt: new Date(
-						Date.now() + data.expires_in * 1000 * 1000
-					).toISOString(),
-				})
-			);
+			
 			if (!response.ok) {
 				const err = new Error(data.message || "Échec de l'inscription");
 				err.status = response.status;
