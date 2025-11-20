@@ -54,7 +54,7 @@ const Register = () => {
 
 			navigate("/connexion");
 		} catch (error) {
-			console.error(`Erreur lors de l'inscription ${ error.status }`);
+			console.error(`Erreur lors de l'inscription ${error.status}`);
 			setError(
 				"Une erreur est survenue lors de l'inscription. Veuillez vérifier vos informations et réessayer."
 			);

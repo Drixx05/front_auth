@@ -32,15 +32,18 @@ const LoginPage = () => {
 		setError(null);
 
 		try {
-			const response = await fetch("https://offers-api.digistos.com/api/auth/login", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-					Accept: "application/json",
-				},
-				body: JSON.stringify(formData),
-				credentials: "include", // permet au navigateur de recevoir et stocker le cookie HttpOnly
-			});
+			const response = await fetch(
+				"https://offers-api.digistos.com/api/auth/login",
+				{
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+						Accept: "application/json",
+					},
+					body: JSON.stringify(formData),
+					credentials: "include", // permet au navigateur de recevoir et stocker le cookie HttpOnly
+				}
+			);
 
 			const data = await response.json();
 
