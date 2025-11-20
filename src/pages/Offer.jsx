@@ -16,8 +16,8 @@ const Offer = () => {
           {
             headers: {
               Accept: "application/json",
-              credentials: "include", // permet au navigateur de recevoir et stocker le cookie HttpOnly
             },
+            credentials: "include", // permet au navigateur de recevoir et stocker le cookie HttpOnly
           }
         );
 

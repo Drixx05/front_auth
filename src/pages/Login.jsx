@@ -32,7 +32,7 @@ const LoginPage = () => {
 		setError(null);
 
 		try {
-			const response = await fetch("/login", {
+			const response = await fetch("https://offers-api.digistos.com/api/auth/login", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -47,7 +47,14 @@ const LoginPage = () => {
 			if (!response.ok) {
 				throw { status: response.status, message: data.message };
 			}
-
+			localStorage.setItem(
+				"auth",
+				JSON.stringify({
+					expiresAt: new Date(
+						Date.now() + data.expires_in * 1000
+					).toISOString(),
+				})
+			);
 			navigate("/offres/professionnelles");
 		} catch (error) {
 			console.error(
