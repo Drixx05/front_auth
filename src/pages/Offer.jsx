@@ -16,7 +16,7 @@ const Offer = () => {
           {
             headers: {
               Accept: "application/json",
-              // Add Authorization token
+              credentials: "include", // permet au navigateur de recevoir et stocker le cookie HttpOnly
             },
           }
         );
